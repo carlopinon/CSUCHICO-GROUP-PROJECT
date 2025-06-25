@@ -1,16 +1,42 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Nature Care</title>
-    <link rel="stylesheet" href="seth/style.css">
-    <script src="stript.js"></script>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <link href="https://fonts.googleapis.com/css2?family=Press+Start+2P&display=swap" rel="stylesheet">
+  <title>Pixilated Earth</title>
+  <link rel="stylesheet" href="style.css" />
 </head>
-<a href="seth/indexS.html">Seth's Site</a>
-<a href="carlo/indexC.html">Carlo's Site</a>
-<a href="melanie/indexM.html">Melanie's Site</a>
-<body> 
+
+<body>
+  <h1>Pixilated Earth</h1>
+
+  <!-- Hidden audio element -->
+  <audio id="bg-music" loop>
+    <source src="files/music.mp3" type="audio/mpeg" />
+    Your browser does not support the audio element.
+  </audio>
+
+  <div class="image-container">
+    <a href="seth/indexS.html">
+      <img src="files/seth.png" alt="Seth's Site" />
+    </a>
+    <a href="carlo/indexC.html">
+      <img src="files/carlo.png" alt="Carlo's Site" />
+    </a>
+    <a href="melanie/indexM.html">
+      <img src="files/melanie.png" alt="Melanie's Site" />
+    </a>
+  </div>
+
+  <!-- JS: Wait for any user interaction -->
+  <script>
+    document.addEventListener("click", function () {
+      const audio = document.getElementById("bg-music");
+      if (audio.paused) {
+        audio.play().catch(err => console.log("Autoplay blocked:", err));
+      }
+    }, { once: true });
+  </script>
 </body>
 </html>
-<!-- php -S localhost:3006 -t ./-->
