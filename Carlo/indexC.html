@@ -10,13 +10,7 @@
 
 <body>
   <div id="sky">
-    <img src="Carlo/garden/sun.png" id="sun" alt="Sun">
-    <!-- 5 cloud copies -->
-    <div class="cloud" style="top: 10px; animation-delay: 0s;"><img src="garden/clouds.png" alt="Cloud"></div>
-    <div class="cloud" style="top: 30px; animation-delay: 3s;"><img src="garden/clouds.png" alt="Cloud"></div>
-    <div class="cloud" style="top: 50px; animation-delay: 6s;"><img src="garden/clouds.png" alt="Cloud"></div>
-    <div class="cloud" style="top: 70px; animation-delay: 9s;"><img src="garden/clouds.png" alt="Cloud"></div>
-    <div class="cloud" style="top: 90px; animation-delay: 12s;"><img src="garden/clouds.png" alt="Cloud"></div>
+    <img id="sun" src="garden/sun.png" alt="Sun">
   </div>
 
   <div id="controls">
@@ -37,13 +31,12 @@
 
   <div id="grid"></div>
 
-  <script src="app.js"></script>
   <style>
     body {
       margin: 0;
       padding: 0;
       font-family: sans-serif;
-      background: url('garden/background.png') no-repeat center center fixed;
+      background: url('garden/background.gif') no-repeat center center fixed;
       background-size: cover;
     }
 
@@ -51,35 +44,38 @@
       position: relative;
       height: 150px;
       overflow: hidden;
+      background: transparent;
     }
 
     #sun {
       position: absolute;
-      top: 20px;
-      left: 0;
-      width: 80px;
+      width: 140px;
       animation: moveSun 60s linear infinite;
+    }
+
+    @keyframes moveSun {
+      0% { left: -140px; top: 10px; }
+      50% { left: 50%; top: 0px; transform: translateX(-50%); }
+      100% { left: 100%; top: 10px; }
     }
 
     .cloud {
       position: absolute;
-      left: 100%;
-      width: 200px;
-      animation: moveClouds 30s linear infinite;
+      width: 100px;
+      opacity: 0;
+      animation: moveClouds 13.33s linear infinite;
+      animation-fill-mode: forwards;
     }
 
     .cloud img {
       width: 100%;
     }
 
-    @keyframes moveSun {
-      0% { left: 0; }
-      100% { left: 100%; }
-    }
-
     @keyframes moveClouds {
-      0% { left: 100%; }
-      100% { left: -200px; }
+      0% { left: 100%; opacity: 0; }
+      10% { opacity: 1; }
+      90% { opacity: 1; }
+      100% { left: -150px; opacity: 0; }
     }
 
     #controls {
@@ -134,12 +130,13 @@
       text-align: center;
     }
   </style>
+
   <script>
     const seeds = {
-      sunflower: { time: 5 * 60, img: 'garden/sunflower.png' },
-      roses: { time: 10 * 60, img: 'garden/roses.png' },
-      iris: { time: 30 * 60, img: 'garden/iris.png' },
-      lily: { time: 60 * 60, img: 'garden/lily.png' }
+      sunflower: { time: 3 * 60, img: 'garden/sunflower.png' },
+      roses: { time: 4 * 60, img: 'garden/roses.png' },
+      iris: { time: 5 * 60, img: 'garden/iris.png' },
+      lily: { time: 6 * 60, img: 'garden/lily.png' }
     };
 
     const grid = document.getElementById('grid');
@@ -166,41 +163,68 @@
         const seed = seeds[type];
         cell.dataset.planted = 'true';
         cell.dataset.seedType = seed.img;
-        cell.dataset.time = seed.time;
-        const img = document.createElement('img');
-        img.src = seed.img;
-        img.classList.add('plant-img');
-        cell.appendChild(img);
-      } else if (action === 'water' && cell.dataset.planted && !cell.dataset.timerStarted) {
-        let time = parseInt(cell.dataset.time);
-        if (cell.dataset.fertilized) time /= 2;
-        cell.dataset.timerStarted = 'true';
+        cell.dataset.totalTime = seed.time;
+        cell.dataset.remainingTime = seed.time;
+        cell.dataset.fertilized = 'false';
 
         const timer = document.createElement('div');
         timer.classList.add('timer-label');
+        timer.textContent = 'Water to start';
         cell.appendChild(timer);
 
+      } else if (action === 'water' && cell.dataset.planted && !cell.dataset.timerStarted) {
+        cell.dataset.timerStarted = 'true';
+        let time = parseInt(cell.dataset.remainingTime);
+        const timer = cell.querySelector('.timer-label');
+
         const interval = setInterval(() => {
+          if (cell.dataset.fertilized === 'true' && !cell.dataset.halved) {
+            time = Math.floor(time / 2);
+            cell.dataset.remainingTime = time;
+            cell.dataset.halved = 'true';
+          }
           if (time > 0) {
+            time--;
+            cell.dataset.remainingTime = time;
             let minutes = Math.floor(time / 60);
             let seconds = time % 60;
             timer.textContent = `${minutes}:${seconds.toString().padStart(2, '0')}`;
-            time--;
           } else {
             clearInterval(interval);
             timer.textContent = 'Bloomed!';
-            alert('Your plant is fully grown!');
+            const img = document.createElement('img');
+            img.src = cell.dataset.seedType;
+            img.classList.add('plant-img');
+            cell.appendChild(img);
           }
         }, 1000);
-      } else if (action === 'fertilizer' && cell.dataset.planted && !cell.dataset.fertilized) {
+
+      } else if (action === 'fertilizer' && cell.dataset.planted && cell.dataset.fertilized === 'false') {
+        let remaining = parseInt(cell.dataset.remainingTime);
+        let adjusted = Math.ceil(remaining / 2);
+        cell.dataset.remainingTime = adjusted;
         cell.dataset.fertilized = 'true';
-        alert('Fertilizer added!');
+        const timer = cell.querySelector('.timer-label');
+        timer.textContent = `Time halved: ${Math.floor(adjusted / 60)}:${(adjusted % 60).toString().padStart(2, '0')}`;
+
       } else if (action === 'shovel' && cell.dataset.planted) {
         cell.dataset = {};
         cell.innerHTML = '';
       }
     }
+
+    // Add clouds at random vertical positions
+    const sky = document.getElementById('sky');
+    for (let i = 0; i < 10; i++) {
+      const cloud = document.createElement('div');
+      cloud.className = 'cloud';
+      cloud.style.top = Math.random() * 120 + 'px';
+      cloud.style.animationDelay = (Math.random() * 10) + 's';
+      const img = document.createElement('img');
+      img.src = 'garden/clouds.png';
+      cloud.appendChild(img);
+      sky.appendChild(cloud);
+    }
   </script>
 </body>
-
 </html>
