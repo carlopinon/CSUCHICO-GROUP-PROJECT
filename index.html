@@ -6,16 +6,17 @@
   <title>Pixilated Earth</title>
   <link rel="stylesheet" href="style.css">
   <link href="https://fonts.googleapis.com/css2?family=Pixelify+Sans&display=swap" rel="stylesheet">
+  <script src="script.js"></script>
 </head>
 
 <body>
-  <h1>Pixilated Earth</h1>
-
-  <!-- Hidden audio element -->
-  <audio id="bg-music" loop>
+  <!-- Auto-playing background audio -->
+  <audio autoplay loop hidden>
     <source src="files/music.mp3" type="audio/mpeg" />
     Your browser does not support the audio element.
   </audio>
+
+  <h1>Pixilate Earth</h1>
 
   <div class="image-container">
     <a href="seth/indexS.html">
@@ -28,15 +29,5 @@
       <img src="files/melanie.png" alt="Melanie's Site" />
     </a>
   </div>
-
-  <!-- JS: Wait for any user interaction -->
-  <script>
-    document.addEventListener("click", function () {
-      const audio = document.getElementById("bg-music");
-      if (audio.paused) {
-        audio.play().catch(err => console.log("Autoplay blocked:", err));
-      }
-    }, { once: true });
-  </script>
 </body>
 </html>
