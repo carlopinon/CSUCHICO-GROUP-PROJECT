@@ -12,26 +12,26 @@
   <div id="sky">
     <img src="Carlo/garden/sun.png" id="sun" alt="Sun">
     <!-- 5 cloud copies -->
-    <div class="cloud" style="top: 10px; animation-delay: 0s;"><img src="Carlo/garden/clouds.png" alt="Cloud"></div>
-    <div class="cloud" style="top: 30px; animation-delay: 3s;"><img src="Carlo/garden/clouds.png" alt="Cloud"></div>
-    <div class="cloud" style="top: 50px; animation-delay: 6s;"><img src="Carlo/garden/clouds.png" alt="Cloud"></div>
-    <div class="cloud" style="top: 70px; animation-delay: 9s;"><img src="Carlo/garden/clouds.png" alt="Cloud"></div>
-    <div class="cloud" style="top: 90px; animation-delay: 12s;"><img src="Carlo/garden/clouds.png" alt="Cloud"></div>
+    <div class="cloud" style="top: 10px; animation-delay: 0s;"><img src="garden/clouds.png" alt="Cloud"></div>
+    <div class="cloud" style="top: 30px; animation-delay: 3s;"><img src="garden/clouds.png" alt="Cloud"></div>
+    <div class="cloud" style="top: 50px; animation-delay: 6s;"><img src="garden/clouds.png" alt="Cloud"></div>
+    <div class="cloud" style="top: 70px; animation-delay: 9s;"><img src="garden/clouds.png" alt="Cloud"></div>
+    <div class="cloud" style="top: 90px; animation-delay: 12s;"><img src="garden/clouds.png" alt="Cloud"></div>
   </div>
 
   <div id="controls">
     <div>
       <h3>Seeds</h3>
-      <img src="Carlo/garden/sunflowerseed.png" alt="Sunflower" draggable="true" ondragstart="drag(event)" data-type="sunflower">
-      <img src="Carlo/garden/rosesseed.png" alt="Roses" draggable="true" ondragstart="drag(event)" data-type="roses">
-      <img src="Carlo/garden/irisseed.png" alt="Iris" draggable="true" ondragstart="drag(event)" data-type="iris">
-      <img src="Carlo/garden/lilyseed.png" alt="Lily" draggable="true" ondragstart="drag(event)" data-type="lily">
+      <img src="garden/sunflowerseed.png" alt="Sunflower" draggable="true" ondragstart="drag(event)" data-type="sunflower">
+      <img src="garden/rosesseed.png" alt="Roses" draggable="true" ondragstart="drag(event)" data-type="roses">
+      <img src="garden/irisseed.png" alt="Iris" draggable="true" ondragstart="drag(event)" data-type="iris">
+      <img src="garden/lilyseed.png" alt="Lily" draggable="true" ondragstart="drag(event)" data-type="lily">
     </div>
     <div>
       <h3>Actions</h3>
-      <img src="Carlo/garden/water.png" alt="Water" draggable="true" ondragstart="drag(event)" data-action="water">
-      <img src="Carlo/garden/fertilizer.png" alt="Fertilizer" draggable="true" ondragstart="drag(event)" data-action="fertilizer">
-      <img src="Carlo/garden/shovel.png" alt="Shovel" draggable="true" ondragstart="drag(event)" data-action="shovel">
+      <img src="garden/water.png" alt="Water" draggable="true" ondragstart="drag(event)" data-action="water">
+      <img src="garden/fertilizer.png" alt="Fertilizer" draggable="true" ondragstart="drag(event)" data-action="fertilizer">
+      <img src="garden/shovel.png" alt="Shovel" draggable="true" ondragstart="drag(event)" data-action="shovel">
     </div>
   </div>
 
@@ -43,7 +43,7 @@
       margin: 0;
       padding: 0;
       font-family: sans-serif;
-      background: url('Carlo/garden/background.png') no-repeat center center fixed;
+      background: url('garden/background.png') no-repeat center center fixed;
       background-size: cover;
     }
 
@@ -109,7 +109,7 @@
     .cell {
       width: 80px;
       height: 80px;
-      background-image: url('Carlo/garden/soilgrid.png');
+      background-image: url('garden/soilgrid.png');
       background-size: cover;
       position: relative;
     }
@@ -136,10 +136,10 @@
   </style>
   <script>
     const seeds = {
-      sunflower: { time: 5 * 60, img: 'Carlo/garden/sunflower.png' },
-      roses: { time: 10 * 60, img: 'Carlo/garden/roses.png' },
-      iris: { time: 30 * 60, img: 'Carlo/garden/iris.png' },
-      lily: { time: 60 * 60, img: 'Carlo/garden/lily.png' }
+      sunflower: { time: 5 * 60, img: 'garden/sunflower.png' },
+      roses: { time: 10 * 60, img: 'garden/roses.png' },
+      iris: { time: 30 * 60, img: 'garden/iris.png' },
+      lily: { time: 60 * 60, img: 'garden/lily.png' }
     };
 
     const grid = document.getElementById('grid');
