@@ -4,9 +4,9 @@
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Planting App</title>
-  <link rel="stylesheet" href="styleC.css">
-  <script src="scriptC.js"></script>
+  <title>Carlo's Garden</title>
+  <link rel="stylesheet" href="style C.css">
+  <script src="script C.js"></script>
 </head>
 
 <body>
@@ -31,6 +31,217 @@
   </div>
 
   <div id="grid"></div>
-  
+
+<style>
+  body {
+      margin: 0;
+      padding: 0;
+      font-family: sans-serif;
+      background: url('garden/background.gif') no-repeat center center fixed;
+      background-size: cover;
+    }
+
+    #sky {
+      position: relative;
+      height: 150px;
+      overflow: hidden;
+      background: transparent;
+    }
+
+    #sun {
+      position: absolute;
+      width: 140px;
+      animation: moveSun 60s linear infinite;
+    }
+
+    @keyframes moveSun {
+      0% { left: -140px; top: 10px; }
+      50% { left: 50%; top: 0px; transform: translateX(-50%); }
+      100% { left: 100%; top: 10px; }
+    }
+
+    .cloud {
+      position: absolute;
+      width: 100px;
+      opacity: 0;
+      animation: moveClouds 13.33s linear infinite;
+      animation-fill-mode: forwards;
+    }
+
+    .cloud img {
+      width: 100%;
+    }
+
+    @keyframes moveClouds {
+      0% { left: 100%; opacity: 0; }
+      10% { opacity: 1; }
+      90% { opacity: 1; }
+      100% { left: -150px; opacity: 0; }
+    }
+
+    #controls {
+      display: flex;
+      justify-content: space-around;
+      background: rgba(255, 255, 255, 0.8);
+      padding: 10px;
+    }
+
+    #controls img {
+      width: 40px;
+      height: 40px;
+      margin: 0 5px;
+      cursor: grab;
+    }
+
+    #grid {
+      display: grid;
+      grid-template-columns: repeat(4, 1fr);
+      grid-template-rows: repeat(4, 1fr);
+      gap: 5px;
+      padding: 10px;
+      max-width: 400px;
+      margin: auto;
+    }
+
+    .cell {
+      width: 80px;
+      height: 80px;
+      background-image: url('garden/soilgrid.png');
+      background-size: cover;
+      position: relative;
+    }
+
+    .plant-img {
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+      position: absolute;
+      top: 0;
+      left: 0;
+    }
+
+    .timer-label {
+      position: absolute;
+      bottom: 0;
+      left: 0;
+      background: rgba(0, 0, 0, 0.5);
+      color: white;
+      font-size: 10px;
+      width: 100%;
+      text-align: center;
+    }
+</style>
+
+
+<script>
+document.addEventListener('DOMContentLoaded', () => {
+  const seeds = {
+    sunflower: { time: 3 * 60, img: 'garden/sunflower.png' },
+    roses: { time: 4 * 60, img: 'garden/roses.png' },
+    iris: { time: 5 * 60, img: 'garden/iris.png' },
+    lily: { time: 6 * 60, img: 'garden/lily.png' }
+  };
+
+  const grid = document.getElementById('grid');
+
+  for (let i = 0; i < 16; i++) {
+    const cell = document.createElement('div');
+    cell.classList.add('cell');
+    cell.dataset.index = i;
+    cell.ondragover = (e) => e.preventDefault();
+    cell.ondrop = (e) => handleDrop(e, cell);
+    grid.appendChild(cell);
+  }
+
+  function drag(event) {
+    event.dataTransfer.setData("type", event.target.dataset.type);
+    event.dataTransfer.setData("action", event.target.dataset.action);
+  }
+
+  function handleDrop(e, cell) {
+    e.preventDefault();
+    const type = e.dataTransfer.getData("type");
+    const action = e.dataTransfer.getData("action");
+
+    if (type && !cell.dataset.planted) {
+      const seed = seeds[type];
+      cell.dataset.planted = 'true';
+      cell.dataset.seedType = seed.img;
+      cell.dataset.totalTime = seed.time;
+      cell.dataset.remainingTime = seed.time;
+      cell.dataset.fertilized = 'false';
+
+      const timer = document.createElement('div');
+      timer.classList.add('timer-label');
+      timer.textContent = 'Water to start';
+      cell.appendChild(timer);
+
+    } else if (action === 'water' && cell.dataset.planted && !cell.dataset.timerStarted) {
+      cell.dataset.timerStarted = 'true';
+      let time = parseInt(cell.dataset.remainingTime);
+      const timer = cell.querySelector('.timer-label');
+
+      const interval = setInterval(() => {
+        if (cell.dataset.fertilized === 'true' && !cell.dataset.halved) {
+          time = Math.floor(time / 2);
+          cell.dataset.remainingTime = time;
+          cell.dataset.halved = 'true';
+        }
+        if (time > 0) {
+          time--;
+          cell.dataset.remainingTime = time;
+          let minutes = Math.floor(time / 60);
+          let seconds = time % 60;
+          timer.textContent = `${minutes}:${seconds.toString().padStart(2, '0')}`;
+        } else {
+          clearInterval(interval);
+          timer.textContent = 'Bloomed!';
+          const img = document.createElement('img');
+          img.src = cell.dataset.seedType;
+          img.classList.add('plant-img');
+          cell.appendChild(img);
+        }
+      }, 1000);
+
+    } else if (action === 'fertilizer' && cell.dataset.planted && cell.dataset.fertilized === 'false') {
+      let remaining = parseInt(cell.dataset.remainingTime);
+      let adjusted = Math.ceil(remaining / 2);
+      cell.dataset.remainingTime = adjusted;
+      cell.dataset.fertilized = 'true';
+      const timer = cell.querySelector('.timer-label');
+      timer.textContent = `Time halved: ${Math.floor(adjusted / 60)}:${(adjusted % 60).toString().padStart(2, '0')}`;
+
+    } else if (action === 'shovel' && cell.dataset.planted) {
+      ['planted', 'seed-type', 'total-time', 'remaining-time', 'fertilized', 'timer-started', 'halved'].forEach(attr => {
+        cell.removeAttribute('data-' + attr);
+      });
+      cell.innerHTML = '';
+    }
+  }
+
+  // Add clouds at random vertical positions
+  const sky = document.getElementById('sky');
+  for (let i = 0; i < 10; i++) {
+    const cloud = document.createElement('div');
+    cloud.className = 'cloud';
+    cloud.style.top = Math.random() * 120 + 'px';
+    cloud.style.animationDelay = (Math.random() * 10) + 's';
+    const img = document.createElement('img');
+    img.src = 'garden/clouds.png';
+    cloud.appendChild(img);
+    sky.appendChild(cloud);
+  }
+
+  // Attach drag handler globally (for all draggable images)
+  document.querySelectorAll('#controls img').forEach(img => {
+    img.addEventListener('dragstart', drag);
+  });
+
+});
+
+</script>
+
+
+
 </body>
 </html>
