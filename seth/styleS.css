@@ -1,0 +1,37 @@
+body{
+    background: url(../seth/pixels.png);
+    background-size: cover;
+}
+
+#score{
+    text-align: left;
+}
+
+#game{
+    width: 800px;
+    height: 500px;
+    border: 3px solid purple;
+    margin-left: 0%;
+    background-image: url(../seth/pixels2.png);
+    background-size: cover;
+    position: relative;
+}
+
+.flex-container{
+    position: absolute;
+    top: 0;
+    left: 0;
+    z-index: 2;
+    display: flex;
+    height: 500px; 
+    width: 800px;
+    flex-wrap: wrap;
+    justify-content: flex-start;
+    align-items: flex-end;
+}
+
+.flex-container > #cat {
+  height: 100px;
+    width: 100px;
+    background-color: green;
+}
