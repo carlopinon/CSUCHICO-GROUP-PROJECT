@@ -25,13 +25,13 @@ body{
     display: flex;
     height: 500px; 
     width: 800px;
-    flex-wrap: wrap;
-    justify-content: flex-start;
-    align-items: flex-end;
+  flex-direction: column-reverse;
+
 }
 
 .flex-container > #cat {
   height: 100px;
     width: 100px;
-    background-color: green;
+    background-image: url(../seth/Mouthless.png);
+    
 }
