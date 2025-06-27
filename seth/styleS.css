@@ -6,16 +6,24 @@ body{
 }
     
 
-#blocks
-{
+#rock{   
+    bottom: -4.0%;
+    left: 0;
+    width: 110px;
+    height: 110px; 
+    position: absolute;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-image: url(https://static.vecteezy.com/system/resources/thumbnails/026/547/570/small/an-8-bit-retro-styled-pixel-art-illustration-of-a-dark-stone-rock-formation-free-png.png);
     display:flex;
     justify-self: flex-start;
     text-align: left;
+    animation: rock 1.34s infinite;
 }
 
 #score{
     position: absolute;
-    top: 99%;
+    top: 99%; 
     left: 10px;
     font-size: 24px;
 }
@@ -67,3 +75,6 @@ body{
     
 }
 
+@keyframes rock{
+    0%{left: 550px;}
+}
