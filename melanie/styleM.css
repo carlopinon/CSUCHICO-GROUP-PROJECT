@@ -43,3 +43,12 @@ h3
     top: 590px;
     left: 955px;
 }
+
+button
+{
+    color: darkblue;
+    background-color:  lightblue;
+    border-radius: 10px;
+    border-color: darkblue;
+    border-width: 10px;
+}
