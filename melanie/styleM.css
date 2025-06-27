@@ -3,6 +3,12 @@ body
     background-color: skyblue;
     background-image: url('https://img.freepik.com/premium-vector/free-vector-pixel-art-nature-landscape-day-time-noon-background-illustration_950839-37.jpg');
     background-size: 1550px;
+    margin: 0;
+    height: 100vh;
+    overflow: hidden;
+    position: relative;
+    user-select: none;
+    font-family: 'Times New Roman', Times, serif;
 
 }
 
@@ -21,7 +27,7 @@ p
     text-align: center;
     font-size: 20px;
     position: absolute;
-    top: 170px;
+    top: 200px;
     left:500px;
     color: rgb(255, 255, 255);
 }
@@ -51,4 +57,24 @@ button
     border-radius: 10px;
     border-color: darkblue;
     border-width: 10px;
+}
+
+.flower
+{
+    position: absolute;
+    font-size: 2.5rem;
+    transform-origin: center;
+    transform: transform 0.2s ease;
+    cursor: pointer;
+}
+
+.spin
+{
+    animation: spin 1s linear infinite;
+
+}
+
+@keyframes spin {
+    from { transform: rotate(0deg); }
+    to { transform: rotate(360deg); }
 }

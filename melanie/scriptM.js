@@ -40,3 +40,8 @@ function draw()
     }
 }
 
+document.querySelectorAll(".flower").forEach(flower => {
+    flower.addEventListener("click", () => {
+        flower.classList.toggle("spin");
+    });
+});
