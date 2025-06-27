@@ -1,21 +1,39 @@
+
 body{
-    background: url(../seth/pixels.png);
+    background: url(pixels.png);
     background-size: cover;
+    z-index: -501;
+}
+    
+
+#blocks
+{
+    display:flex;
+    justify-self: flex-start;
+    text-align: left;
 }
 
 #score{
-    text-align: left;
+    position: absolute;
+    top: 99%;
+    left: 10px;
+    font-size: 24px;
 }
+
+
 
 #game{
     width: 800px;
     height: 500px;
     border: 3px solid purple;
     margin-left: 0%;
-    background-image: url(../seth/pixels2.png);
+    background-image: url(pixels2.png);
     background-size: cover;
     position: relative;
+    z-index: -500;
 }
+
+
 
 .flex-container{
     position: absolute;
@@ -29,8 +47,23 @@ body{
 
 }
 
+
 .flex-container > #cat {
-  height: 100px;
-    width: 100px;
-    background-image: url()
+    
+    bottom: -13.5%;
+    left: 0;
+    /*
+  height: 319px;
+    width: 572px;
+    */
+    width: 150px;
+    height: 150px;
+    position: absolute;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-image: url(Mouthless_2.0.png); 
+    
+    z-index: 999;
+    
 }
+
