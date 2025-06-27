@@ -1,12 +1,12 @@
 
-body{
+body {
     background: url(pixels.png);
     background-size: cover;
     z-index: -501;
 }
     
 
-#rock{   
+#rock {   
     bottom: -4.0%;
     left: 0;
     width: 110px;
@@ -21,7 +21,7 @@ body{
     animation: rock 1.34s infinite;
 }
 
-#score{
+#score {
     position: absolute;
     top: 99%; 
     left: 10px;
@@ -30,7 +30,7 @@ body{
 
 
 
-#game{
+#game {
     width: 800px;
     height: 500px;
     border: 3px solid purple;
@@ -43,7 +43,7 @@ body{
 
 
 
-.flex-container{
+.flex-container {
     position: absolute;
     top: 0;
     left: 0;
@@ -72,9 +72,21 @@ body{
     background-image: url(Mouthless_2.0.png); 
     
     z-index: 999;
-    
+   
 }
 
-@keyframes rock{
-    0%{left: 550px;}
+@keyframes rock {
+    0%{left: 700px;}
+    100%{left: -50px;}
+}
+
+.jump-animation {
+ animation: jump 0.5s;   
+}
+
+@keyframes jump {
+   0%{top: 300px;}
+    50%{top: 150px;}
+    75%{top: 150px;}
+    100%{top: 300px;} 
 }
