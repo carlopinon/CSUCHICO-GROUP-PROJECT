@@ -57,7 +57,7 @@ body {
 
 
 .flex-container > #cat {
-    
+    position: absolute;
     bottom: -13.5%;
     left: 0;
     /*
@@ -70,7 +70,6 @@ body {
     background-size: contain;
     background-repeat: no-repeat;
     background-image: url(Mouthless_2.0.png); 
-    
     z-index: 999;
    
 }
@@ -85,8 +84,8 @@ body {
 }
 
 @keyframes jump {
-   0%{top: 300px;}
-    50%{top: 150px;}
-    75%{top: 150px;}
-    100%{top: 300px;} 
+   0%{top: 150px;}
+    50%{top: 75px;}
+    75%{top: 75px;}
+    100%{top: 150px;} 
 }
