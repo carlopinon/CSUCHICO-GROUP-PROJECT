@@ -1,23 +1,49 @@
-body{
-    background: url(../seth/pixels.png);
+
+body {
+    background: url(pixels.png);
     background-size: cover;
+    z-index: -501;
 }
+    
 
-#score{
+#rock {   
+    bottom: -4.0%;
+    left: 0;
+    width: 110px;
+    height: 110px; 
+    position: absolute;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-image: url(https://static.vecteezy.com/system/resources/thumbnails/026/547/570/small/an-8-bit-retro-styled-pixel-art-illustration-of-a-dark-stone-rock-formation-free-png.png);
+    display:flex;
+    justify-self: flex-start;
     text-align: left;
+    animation: rock 1.34s infinite;
 }
 
-#game{
+#score {
+    position: absolute;
+    top: 99%; 
+    left: 10px;
+    font-size: 24px;
+}
+
+
+
+#game {
     width: 800px;
     height: 500px;
     border: 3px solid purple;
     margin-left: 0%;
-    background-image: url(../seth/pixels2.png);
+    background-image: url(pixels2.png);
     background-size: cover;
     position: relative;
+    z-index: -500;
 }
 
-.flex-container{
+
+
+.flex-container {
     position: absolute;
     top: 0;
     left: 0;
@@ -25,13 +51,41 @@ body{
     display: flex;
     height: 500px; 
     width: 800px;
-    flex-wrap: wrap;
-    justify-content: flex-start;
-    align-items: flex-end;
+  flex-direction: column-reverse;
+
 }
 
+
 .flex-container > #cat {
-  height: 100px;
-    width: 100px;
-    background-color: green;
+    position: absolute;
+    bottom: -13.5%;
+    left: 0;
+    /*
+  height: 319px;
+    width: 572px;
+    */
+    width: 150px;
+    height: 150px;
+    position: absolute;
+    background-size: contain;
+    background-repeat: no-repeat;
+    background-image: url(Mouthless_2.0.png); 
+    z-index: 999;
+   
+}
+
+@keyframes rock {
+    0%{left: 700px;}
+    100%{left: -50px;}
+}
+
+.jump-animation {
+ animation: jump 0.5s;   
+}
+
+@keyframes jump {
+   0%{top: 150px;}
+    50%{top: 75px;}
+    75%{top: 75px;}
+    100%{top: 150px;} 
 }
