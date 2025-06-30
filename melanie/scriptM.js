@@ -39,3 +39,9 @@ function draw()
         stroke(200,77,55);
     }
 }
+
+document.querySelectorAll(".flower").forEach(flower => {
+    flower.addEventListener("click", () => {
+        flower.classList.toggle("spin");
+    });
+});
